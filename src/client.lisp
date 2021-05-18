@@ -93,7 +93,7 @@
   (assert (pending-connack client))
   (assert (not (connection-established client)))
   (let ((message
-          (octets-to-message (bytes (read-raw-message-t (socket-stream client))))))
+          (octets-to-message (bytes (read-raw-message-with-timeout (socket-stream client))))))
     (assert (eql (packet-type message) :connack))
     (assert (eql (connect-return-code message) :accepted))
     (with-slots (pending-connack connection-established) client
@@ -113,7 +113,7 @@
 (defun wait-for-pingresp (client)
   (assert (pending-ping client))
   (let ((message
-          (octets-to-message (bytes (read-raw-message-t (socket-stream client))))))
+          (octets-to-message (bytes (read-raw-message-with-timeout (socket-stream client))))))
     (assert (eql (packet-type message) :pingresp))
     (with-slots (pending-ping last-ping) client
       (setf last-ping (current-time-in-sec))
@@ -133,7 +133,7 @@
 
 (defun wait-for-suback (client)
   (let ((message
-          (octets-to-message (bytes (read-raw-message-t (socket-stream client))))))
+          (octets-to-message (bytes (read-raw-message-with-timeout (socket-stream client))))))
     (assert (eql (packet-type message) :suback))))
 
 (defun ping-required (client)
