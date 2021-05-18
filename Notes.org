@@ -1,0 +1,7 @@
+* TODOS
+** DONE Remove error checking from make-message function
+   We now do error checking only in higher level functions (i.e connect).
+** DONE Move 'invalid-message-error from message to client package
+** TODO Define publish function
+** TODO Define subscribe function
+   
