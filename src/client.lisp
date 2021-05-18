@@ -9,6 +9,7 @@
    :mcutiet.queue)
   (:local-nicknames (#:a #:alexandria))
   (:export
+   :start
    :connect))
 
 (in-package :mcutiet.client)
