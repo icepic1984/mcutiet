@@ -190,7 +190,7 @@
   (a:when-let ((time (pending-ping client)))
     (unless (is-answer-quick-enough time (current-time-in-sec))
       (error 'read-timeout :timeout 3)))
- 
+
   ;; Process new messages
   (a:when-let ((incoming-message (read-incoming-message-no-hang (socket-stream client))))
     (let ((message (octets-to-message (bytes incoming-message))))
