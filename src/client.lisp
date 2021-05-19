@@ -9,8 +9,14 @@
    :mcutiet.queue)
   (:local-nicknames (#:a #:alexandria))
   (:export
-   :start
-   :connect))
+   :run-once
+   :connect-to-server
+   :disconnect-from-server
+   :send-connect
+   :wait-for-connack
+   :subscribe
+   :wait-for-suback
+   :process-message))
 
 (in-package :mcutiet.client)
 
