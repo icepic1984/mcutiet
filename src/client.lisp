@@ -193,7 +193,9 @@
  
   ;; Process new messages
   (a:when-let ((incoming-message (read-incoming-message-no-hang (socket-stream client))))
-    (process-message (octets-to-message (bytes incoming-message)) client)))
+    (let ((message (octets-to-message (bytes incoming-message))))
+      (process-message (octets-to-message (bytes incoming-message)) client)
+      message)))
 
 
 (defun start (host port topic keep-alive retries)
