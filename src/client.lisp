@@ -153,14 +153,6 @@
        (time-for-next-ping-is-up (last-ping client) (current-time-in-sec) (keep-alive client)))
       t nil))
 
-(defun connect-required (client)
-  ;; If we don't have a established connection and are not waiting for
-  ;; a connack, a new send request is required.
-  (if (and
-       (not (connection-established client))
-       (not (pending-connack client)))
-      t nil))
-
 (defgeneric process-message (message client)
   (:documentation "Invoke processing of message."))
 
