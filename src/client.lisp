@@ -197,7 +197,6 @@
       (process-message (octets-to-message (bytes incoming-message)) client)
       message)))
 
-
 (defun start (host port topic keep-alive retries)
   (loop for i from 1 to retries do
     (restart-case
@@ -215,9 +214,6 @@
   (format t "Finished!~%"))
 
 
-(restart-case
-    (let ((client (connect-to-server "kube-master" 30001 :keep-alive 20))))
-  (bla () :report "bdf" nil))
 
 
 
