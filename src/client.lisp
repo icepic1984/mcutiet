@@ -197,7 +197,8 @@
       (process-message (octets-to-message (bytes incoming-message)) client)
       message)))
 
-(defun start (host port topic keep-alive retries)
+
+(defun start (host port topic runs &key (keep-alive 20) (retries 5))
   (loop for i from 1 to retries do
     (restart-case
         (let ((client (connect-to-server host port :keep-alive keep-alive)))
@@ -205,15 +206,26 @@
           (wait-for-connack client)
           (subscribe client topic)
           (wait-for-suback client)
-          (loop do
-            (sleep 0.5)
-            (run-once client)))
+          (loop for i from 1 to runs
+                do
+                   (sleep 0.5)
+                   (run-once client)))
       (retry () :report "Reconnect and continue" nil))
-    (format t "Retry~%")
-    (sleep 1))
-  (format t "Finished!~%"))
+    (sleep 1)))
+
+;; (start "kube-maste" 30000 "/home/office/outdoor" 20 5)
 
 
+;; (handler-bind ((usocket:connection-refused-error (lambda (c)
+;;                         (declare (ignore c))
+;;                         (format t "Connection refused. Retry~%")
+;;                         (invoke-restart 'retry))))
+;;   (start "kube-master" 30000 "/home/office/outdoor" 20 5))
+
+
+;; (restart-case
+;;     (let ((client (connect-to-server "kube-master" 30001 :keep-alive 20))))
+;;   (bla () :report "bdf" nil))
 
 
 
